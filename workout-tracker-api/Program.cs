@@ -90,8 +90,10 @@ void ConfigureServices
 
 	//Configure Repositor(ies)
 	services.AddScoped<IMuscleRepository, MuscleRepository>();
+	services.AddScoped<IExerciseRepository, ExerciseRepository>();
 
 	//Configure Business Logic Service(s)
 	services.AddScoped<IMuscleService, MuscleService>();
+	services.AddScoped<IExerciseService, ExerciseService>();
 
 }

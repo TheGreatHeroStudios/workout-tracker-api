@@ -29,14 +29,8 @@ namespace service.Implementation
 					.GetMuscles()
 					.Select
 					(
-						muscle =>
-							new MuscleDto
-							{
-								MuscleId = muscle.MuscleId,
-								AnatomicalName = muscle.MuscleLongDesc,
-								SimpleName = muscle.MuscleShortDesc,
-								MuscleGroupName = muscle.MuscleGroup.MuscleGroupDesc
-							}
+						muscle => 
+							MuscleDto.FromModel(muscle)
 					)
 					.ToList();
 		}

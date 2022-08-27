@@ -16,7 +16,7 @@ namespace repository.Implementation
 
 
 
-		#region Public Method(s)
+		#region 'IMuscleRepository' Implementation
 		public List<Muscle> GetMuscles()
 		{
 			return
