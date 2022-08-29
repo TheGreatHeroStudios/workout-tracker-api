@@ -59,9 +59,28 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+
+app.UseCors
+(
+	builder =>
+	{
+		builder
+			.WithOrigins
+			(
+				"http://localhost:3000",
+				"http://192.168.1.159:3000",
+				"http://192.168.1.161:3000"
+			)
+			.AllowAnyMethod()
+			.AllowAnyHeader()
+			.AllowAnyOrigin();
+	}
+);
 
 app.UseAuthorization();
+
+app.UseResponseCaching();
 
 app.MapControllers();
 
