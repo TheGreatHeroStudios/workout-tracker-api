@@ -61,6 +61,23 @@ if (app.Environment.IsDevelopment())
 
 //app.UseHttpsRedirection();
 
+// Enable PNA preflight requests
+/*app.Use
+(
+	async (ctx, next) =>
+	{
+		if 
+		(
+			ctx.Request.Method.Equals("options", StringComparison.InvariantCultureIgnoreCase) && 
+			ctx.Request.Headers.ContainsKey("Access-Control-Request-Private-Network")
+		)
+		{
+			ctx.Response.Headers.Add("Access-Control-Allow-Private-Network", "true");
+		}
+
+		await next();
+	});*/
+
 app.UseCors
 (
 	builder =>
@@ -68,9 +85,9 @@ app.UseCors
 		builder
 			.WithOrigins
 			(
-				"http://localhost:3000",
-				"http://192.168.1.159:3000",
-				"http://192.168.1.161:3000"
+				"http://localhost:4002",
+				"http://192.168.1.159:4002",
+				"http://192.168.1.161:4002"
 			)
 			.AllowAnyMethod()
 			.AllowAnyHeader()

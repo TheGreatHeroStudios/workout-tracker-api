@@ -60,7 +60,7 @@ namespace workout_tracker_api.Controllers
 		/// <returns>
 		///		The retrieved image (read from bytes).
 		/// </returns>
-		[HttpGet("image", Name = "GetExerciseImage")]
+		[HttpGet("Image", Name = "GetExerciseImage")]
 		public IActionResult GetExerciseImage
 		(
 			[FromQuery][Required] int exerciseId
