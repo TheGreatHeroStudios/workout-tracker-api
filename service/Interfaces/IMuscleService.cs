@@ -1,13 +1,9 @@
 ﻿using dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using model;
 
 namespace service.Interfaces
 {
-	public interface IMuscleService
+	public interface IMuscleService : IWorkoutTrackerService<Muscle, MuscleDto>
 	{
 		public List<MuscleDto> RetrieveMuscles();
 	}

@@ -1,4 +1,5 @@
 ﻿using dto;
+using model;
 using repository.Interfaces;
 using service.Interfaces;
 using System;
@@ -34,8 +35,7 @@ namespace service.Implementation
 					.GetExercises(pageIndex, count)
 					.Select
 					(
-						exercise =>
-							ExerciseDto.FromModel(exercise)
+						exercise => FromModel(exercise)
 					)
 					.ToList();
 		}
@@ -46,6 +46,36 @@ namespace service.Implementation
 			return
 				_repo
 					.GetExerciseImageBytes(exerciseId);
+		}
+		#endregion
+
+
+
+		#region 'IWorkoutTrackerService' Implementation
+		public ExerciseDto FromModel(Exercise model)
+		{
+			return
+				new ExerciseDto
+				{
+					ExerciseId = model.ExerciseId,
+					ExerciseName = model.ExerciseName,
+					ExerciseDescription = model.ExerciseDesc,
+					Muscles =
+						model
+							.ExerciseMuscles
+							.Select
+							(
+								em =>
+									new MuscleDto
+									{
+										MuscleId = em.Muscle.MuscleId,
+										SimpleName = em.Muscle.MuscleShortDesc,
+										AnatomicalName = em.Muscle.MuscleLongDesc,
+										MuscleGroupName = em.Muscle.MuscleGroup?.MuscleGroupDesc
+									}
+							)
+							.ToList()
+				};
 		}
 		#endregion
 	}

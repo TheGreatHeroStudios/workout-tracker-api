@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace model
+﻿namespace model
 {
 	public partial class Muscle
 	{

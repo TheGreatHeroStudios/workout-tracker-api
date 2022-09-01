@@ -1,4 +1,5 @@
 ﻿using dto;
+using model;
 using repository.Interfaces;
 using service.Interfaces;
 
@@ -29,10 +30,25 @@ namespace service.Implementation
 					.GetMuscles()
 					.Select
 					(
-						muscle => 
-							MuscleDto.FromModel(muscle)
+						muscle => FromModel(muscle)
 					)
 					.ToList();
+		}
+		#endregion
+
+
+
+		#region 'IWorkoutTrackerService' Implementation
+		public MuscleDto FromModel(Muscle model)
+		{
+			return
+				new MuscleDto
+				{
+					MuscleId = model.MuscleId,
+					AnatomicalName = model.MuscleLongDesc,
+					SimpleName = model.MuscleShortDesc,
+					MuscleGroupName = model.MuscleGroup.MuscleGroupDesc
+				};
 		}
 		#endregion
 	}
