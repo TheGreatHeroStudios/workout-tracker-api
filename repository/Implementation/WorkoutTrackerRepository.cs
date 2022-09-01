@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace repository.Implementation
 {
-	public abstract class WorkoutTrackerRepository
+	public abstract class WorkoutTrackerRepository<TEntity>
 	{
 		protected WorkoutTrackerContext _context;
 
@@ -16,5 +16,7 @@ namespace repository.Implementation
 		{
 			_context = context;
 		}
+
+		protected abstract IQueryable<TEntity> ComposeQueryable();
 	}
 }

@@ -9,6 +9,7 @@ namespace repository.Interfaces
 {
 	public interface IMuscleRepository
 	{
-		public List<Muscle> GetMuscles();
+		Muscle GetMuscle(int muscleId);
+		List<Muscle> GetMuscles();
 	}
 }

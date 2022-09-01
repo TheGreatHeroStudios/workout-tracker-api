@@ -5,9 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace workout_tracker_api.Controllers
 {
-	[ApiController]
-	[Route("[controller]")]
-	public class ExerciseController : ControllerBase
+	
+	public class ExerciseController : WorkoutTrackerController
 	{
 		#region Non-Public Member(s)
 		private IExerciseService _service;
@@ -24,7 +23,7 @@ namespace workout_tracker_api.Controllers
 
 
 
-		#region Controller Method(s)
+		#region 'Get' Endpoint(s)
 		/// <summary>
 		///		Retrieves a collection of exercises detailing
 		///		the name, process, and affected muscles.
@@ -47,7 +46,15 @@ namespace workout_tracker_api.Controllers
 		)
 		{
 			return
-				Ok(_service.RetrieveExercises(pageIndex, count));
+				RunWithinErrorBoundary
+				(
+					() =>
+						Ok
+						(
+							_service
+								.RetrieveExercises(pageIndex, count)
+						)
+				);
 		}
 
 
@@ -60,7 +67,7 @@ namespace workout_tracker_api.Controllers
 		/// <returns>
 		///		The retrieved image (read from bytes).
 		/// </returns>
-		[HttpGet("Image", Name = "GetExerciseImage")]
+		/*[HttpGet("Image", Name = "GetExerciseImage")]
 		public IActionResult GetExerciseImage
 		(
 			[FromQuery][Required] int exerciseId
@@ -77,6 +84,36 @@ namespace workout_tracker_api.Controllers
 			{
 				return NotFound();
 			}
+		}*/
+		#endregion
+
+
+
+		#region 'Put' Endpoint(s)
+		[HttpPut(Name = "PutExercise")]
+		public IActionResult PutExercise
+		(
+			[FromBody][Required] ExerciseUpdatePayload updatePayload
+		)
+		{
+			return
+				RunWithinErrorBoundary
+				(
+					() =>
+					{
+						_service
+							.CommitExercise
+							(
+								updatePayload.exerciseId ?? -1,
+								updatePayload.exerciseName,
+								updatePayload.exerciseDescription,
+								updatePayload.exerciseImageBase64,
+								updatePayload.muscleIds
+							);
+
+						return Ok();
+					}
+				);
 		}
 		#endregion
 	}

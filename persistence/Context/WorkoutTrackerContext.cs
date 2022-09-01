@@ -194,7 +194,7 @@ namespace persistence.Context
                 entity.Property(e => e.WorkoutId).HasColumnName("workout_id");
 
                 entity.HasOne(d => d.Exercise)
-                    .WithMany(p => p.WorkoutExercises)
+                    .WithMany()
                     .HasForeignKey(d => d.ExerciseId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_xworkoutexercise_exercise_exerciseid");

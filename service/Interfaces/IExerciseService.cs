@@ -10,7 +10,16 @@ namespace service.Interfaces
 {
 	public interface IExerciseService : IWorkoutTrackerService<Exercise, ExerciseDto>
 	{
-		public List<ExerciseDto> RetrieveExercises(int pageIndex, int count);
-		public byte[]? RetrieveExerciseImageBytes(int exerciseId);
+		List<ExerciseDto> RetrieveExercises(int pageIndex, int count);
+		byte[]? RetrieveExerciseImageBytes(int exerciseId);
+
+		void CommitExercise
+		(
+			int exerciseId,
+			string exerciseName,
+			string? exerciseDescription,
+			string? exerciseImageBase64,
+			List<int> muscleIds
+		);
 	}
 }

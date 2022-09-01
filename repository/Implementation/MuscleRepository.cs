@@ -5,7 +5,7 @@ using repository.Interfaces;
 
 namespace repository.Implementation
 {
-    public class MuscleRepository : WorkoutTrackerRepository, IMuscleRepository
+    public class MuscleRepository : WorkoutTrackerRepository<Muscle>, IMuscleRepository
     {
 		#region Constructor(s)
 		public MuscleRepository(WorkoutTrackerContext context) 
@@ -17,14 +17,32 @@ namespace repository.Implementation
 
 
 		#region 'IMuscleRepository' Implementation
+		public Muscle GetMuscle(int muscleId)
+		{
+			return
+				ComposeQueryable()
+					.Single
+					(
+						muscle =>
+							muscle.MuscleId == muscleId
+					);
+		}
+
+
 		public List<Muscle> GetMuscles()
 		{
 			return
-				_context
-					.Muscles
-					.Include(m => m.MuscleGroup)
-					.ToList();
+				ComposeQueryable().ToList();
 		}
+		#endregion
+
+
+
+		#region Override(s)
+		protected override IQueryable<Muscle> ComposeQueryable() =>
+			_context
+				.Muscles
+				.Include(m => m.MuscleGroup);
 		#endregion
 	}
 }

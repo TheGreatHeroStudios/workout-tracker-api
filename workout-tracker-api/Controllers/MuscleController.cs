@@ -4,9 +4,7 @@ using service.Interfaces;
 
 namespace workout_tracker_api.Controllers
 {
-	[ApiController]
-	[Route("[controller]")]
-	public class MuscleController : ControllerBase
+	public class MuscleController : WorkoutTrackerController
 	{
 		#region Non-Public Member(s)
 		private IMuscleService _service;
@@ -32,10 +30,18 @@ namespace workout_tracker_api.Controllers
 		///		A collection of all <seealso cref="MuscleDto"/>s.
 		/// </returns>
 		[HttpGet(Name = "GetMuscles")]
-		public IEnumerable<MuscleDto> GetMuscles()
+		public IActionResult GetMuscles()
 		{
 			return 
-				_service.RetrieveMuscles();
+				RunWithinErrorBoundary
+				(
+					() => 
+						Ok
+						(
+							_service
+								.RetrieveMuscles()
+						)
+				);
 		}
 		#endregion
 	}

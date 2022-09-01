@@ -5,7 +5,6 @@
 		public Exercise()
 		{
 			ExerciseMuscles = new HashSet<ExerciseMuscle>();
-			WorkoutExercises = new HashSet<WorkoutExercise>();
 		}
 
 		public int ExerciseId { get; set; }
@@ -14,6 +13,5 @@
 		public byte[]? ExerciseImage { get; set; }
 
 		public virtual ICollection<ExerciseMuscle> ExerciseMuscles { get; set; }
-		public virtual ICollection<WorkoutExercise> WorkoutExercises { get; set; }
 	}
 }

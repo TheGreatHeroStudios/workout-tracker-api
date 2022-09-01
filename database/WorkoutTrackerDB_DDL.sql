@@ -11,7 +11,7 @@ GO
 --------------------------------------------------------------------------------------------------------------------------
 --												c_muscle_group															--
 --------------------------------------------------------------------------------------------------------------------------
-IF NOT EXISTS(SELECT * FROM sys.tables WHERE name = 'c_muscle_group') 
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'c_muscle_group') 
 BEGIN 
 
 CREATE TABLE c_muscle_group
@@ -43,7 +43,7 @@ GO
 --------------------------------------------------------------------------------------------------------------------------
 --													c_muscle															--
 --------------------------------------------------------------------------------------------------------------------------
-IF NOT EXISTS(SELECT * FROM sys.tables WHERE name = 'c_muscle') 
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'c_muscle') 
 BEGIN
 
 CREATE TABLE c_muscle
@@ -96,7 +96,7 @@ GO
 --------------------------------------------------------------------------------------------------------------------------
 --													weigh_in															--
 --------------------------------------------------------------------------------------------------------------------------
-IF NOT EXISTS(SELECT * FROM sys.tables WHERE name = 'weigh_in') 
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'weigh_in') 
 BEGIN
 
 CREATE TABLE weigh_in
@@ -116,7 +116,7 @@ GO
 --------------------------------------------------------------------------------------------------------------------------
 --													  workout  															--
 --------------------------------------------------------------------------------------------------------------------------
-IF NOT EXISTS(SELECT * FROM sys.tables WHERE name = 'workout') 
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'workout') 
 BEGIN
 
 CREATE TABLE workout
@@ -136,7 +136,7 @@ GO
 --------------------------------------------------------------------------------------------------------------------------
 --													exercise															--
 --------------------------------------------------------------------------------------------------------------------------
-IF NOT EXISTS(SELECT * FROM sys.tables WHERE name = 'exercise') 
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'exercise') 
 BEGIN
 
 CREATE TABLE exercise
@@ -166,7 +166,7 @@ GO
 --------------------------------------------------------------------------------------------------------------------------
 --											    x_exercise_muscle														--
 --------------------------------------------------------------------------------------------------------------------------
-IF NOT EXISTS(SELECT * FROM sys.tables WHERE name = 'x_exercise_muscle') 
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'x_exercise_muscle') 
 BEGIN
 
 CREATE TABLE x_exercise_muscle
@@ -197,7 +197,7 @@ GO
 --------------------------------------------------------------------------------------------------------------------------
 --											  x_workout_exercise														--
 --------------------------------------------------------------------------------------------------------------------------
-IF NOT EXISTS(SELECT * FROM sys.tables WHERE name = 'x_workout_exercise') 
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'x_workout_exercise') 
 BEGIN
 
 CREATE TABLE x_workout_exercise
@@ -217,7 +217,7 @@ GO
 --------------------------------------------------------------------------------------------------------------------------
 --													set_lap																--
 --------------------------------------------------------------------------------------------------------------------------
-IF NOT EXISTS(SELECT * FROM sys.tables WHERE name = 'set_lap') 
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'set_lap') 
 BEGIN
 
 CREATE TABLE set_lap
@@ -233,3 +233,27 @@ ALTER TABLE set_lap ADD CONSTRAINT set_lap_id PRIMARY KEY CLUSTERED (set_lap_id 
 
 END
 GO
+
+
+
+CREATE OR ALTER VIEW vw_exercise_details
+AS
+(
+	SELECT 
+		ex.exercise_id,
+		ex.exercise_name,
+		ex.exercise_desc,
+		ex.exercise_image,
+		m.muscle_id,
+		m.muscle_short_desc,
+		m.muscle_long_desc,
+		mg.muscle_group_desc
+	FROM 
+		exercise ex
+		LEFT JOIN x_exercise_muscle ex_m
+			ON ex.exercise_id = ex_m.exercise_id
+		LEFT JOIN c_muscle m
+			ON m.muscle_id = ex_m.muscle_id
+		LEFT JOIN c_muscle_group mg
+			ON mg.muscle_group_id = m.muscle_group_id
+)

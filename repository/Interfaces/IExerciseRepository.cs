@@ -9,8 +9,16 @@ namespace repository.Interfaces
 {
 	public interface IExerciseRepository
 	{
-		public Exercise? GetExerciseById(int exerciseId);
-		public byte[]? GetExerciseImageBytes(int exerciseId);
-		public List<Exercise> GetExercises(int pageIndex, int count);
+		Exercise? GetExerciseById(int exerciseId);
+		byte[]? GetExerciseImageBytes(int exerciseId);
+		List<Exercise> GetExercises(int pageIndex, int count);
+
+		void CreateExercise(Exercise exercise, List<int> muscleIds);
+		void UpdateExercise
+		(
+			Exercise trackedExercise, 
+			Exercise updatedExerciseValues,
+			List<int> updatedMuscleIds
+		);
 	}
 }
